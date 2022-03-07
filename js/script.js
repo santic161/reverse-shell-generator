@@ -3,16 +3,12 @@
 const ipInput = document.querySelector("#ip");
 const portInput = document.querySelector("#port");
 const listenerSelect = document.querySelector("#listener-selection");
-<<<<<<< HEAD
-const shellSelect = document.querySelector("#shell");
-=======
 const fileNameDiv = document.querySelector("#fileName")
 const filePathDiv = document.querySelector("#filePath")
 const fileInput = document.querySelector("#fileInput")
 const pathInput = document.querySelector("#filePathInput")
 const shellSelect = document.querySelector("#shell");
 // const secondCommandDiv = document.querySelector("#Transfer-command-2")
->>>>>>> 7c9cf8d (Added Transfer tab)
 // const autoCopySwitch = document.querySelector("#auto-copy-switch");
 const encodingSelect = document.querySelector('#encoding');
 const listenerCommand = document.querySelector("#listener-command");
@@ -20,12 +16,9 @@ const reverseShellCommand = document.querySelector("#reverse-shell-command");
 const bindShellCommand = document.querySelector("#bind-shell-command");
 const msfVenomCommand = document.querySelector("#msfvenom-command");
 
-<<<<<<< HEAD
-=======
 const TransferCommand = document.querySelector("#Transfer-command");
 const TransferCommand2 = document.querySelector("#Transfer-command-2");
 
->>>>>>> 7c9cf8d (Added Transfer tab)
 const FilterType = {
     'All': 'all',
     'Windows': 'windows',
@@ -35,22 +28,24 @@ const FilterType = {
 
 document.querySelector("#os-options").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
-<<<<<<< HEAD
-=======
     fileNameDiv.style.display = "none"
     filePathDiv.style.display = "none"
->>>>>>> 7c9cf8d (Added Transfer tab)
+    rsg.setState({
+        filter: selectedOS,
+    });
+});
+document.querySelector("#os-options-transfer").addEventListener("change", (event) => {
+    const selectedOS = event.target.value;
+    fileNameDiv.style.display = "none"
+    filePathDiv.style.display = "none"
     rsg.setState({
         filter: selectedOS,
     });
 });
 
 document.querySelector("#reverse-tab").addEventListener("click", () => {
-<<<<<<< HEAD
-=======
     fileNameDiv.style.display = "none"
     filePathDiv.style.display = "none"
->>>>>>> 7c9cf8d (Added Transfer tab)
     rsg.setState({
         commandType: CommandType.ReverseShell,
     });
@@ -60,20 +55,13 @@ document.querySelector("#bind-tab").addEventListener("click", () => {
     rsg.setState({
         commandType: CommandType.BindShell,
         encoding: "None"
-<<<<<<< HEAD
-});
-=======
     });
->>>>>>> 7c9cf8d (Added Transfer tab)
 })
 
 document.querySelector("#bind-tab").addEventListener("click", () => {
     document.querySelector("#bind-shell-selection").innerHTML = "";
-<<<<<<< HEAD
-=======
     fileNameDiv.style.display = "none"
     filePathDiv.style.display = "none"
->>>>>>> 7c9cf8d (Added Transfer tab)
     rsg.setState({
         commandType: CommandType.BindShell
 
@@ -82,11 +70,6 @@ document.querySelector("#bind-tab").addEventListener("click", () => {
 
 document.querySelector("#msfvenom-tab").addEventListener("click", () => {
     document.querySelector("#msfvenom-selection").innerHTML = "";
-<<<<<<< HEAD
-    rsg.setState({
-        commandType: CommandType.MSFVenom,
-encoding: "None"
-=======
     fileNameDiv.style.display = "none"
     filePathDiv.style.display = "none"
     rsg.setState({
@@ -102,7 +85,6 @@ document.querySelector("#Transfer-tab").addEventListener("click", () => {
     rsg.setState({
         commandType: CommandType.Transfer,
         encoding: "None"
->>>>>>> 7c9cf8d (Added Transfer tab)
     });
 });
 
@@ -136,11 +118,8 @@ const query = new URLSearchParams(location.hash.substring(1));
 
 const rsg = {
     ip: query.get('ip') || localStorage.getItem('ip') || '10.10.10.10',
-<<<<<<< HEAD
-=======
     fileInput: query.get('fileInput') || localStorage.getItem('fileInput') || 'id_rsa',
     pathInput: query.get('pathInput') || localStorage.getItem('pathInput') || './',
->>>>>>> 7c9cf8d (Added Transfer tab)
     port: query.get('port') || localStorage.getItem('port') || 9001,
     payload: query.get('payload') || localStorage.getItem('payload') || 'windows/x64/meterpreter/reverse_tcp',
     shell: query.get('shell') || localStorage.getItem('shell') || rsgData.shells[0],
@@ -150,10 +129,7 @@ const rsg = {
         [CommandType.ReverseShell]: filterCommandData(rsgData.reverseShellCommands, { commandType: CommandType.ReverseShell })[0].name,
         [CommandType.BindShell]: filterCommandData(rsgData.reverseShellCommands, { commandType: CommandType.BindShell })[0].name,
         [CommandType.MSFVenom]: filterCommandData(rsgData.reverseShellCommands, { commandType: CommandType.MSFVenom })[0].name,
-<<<<<<< HEAD
-=======
         [CommandType.Transfer]: filterCommandData(rsgData.reverseShellCommands, { commandType: CommandType.Transfer })[0].name,
->>>>>>> 7c9cf8d (Added Transfer tab)
     },
     commandType: CommandType.ReverseShell,
     filter: FilterType.All,
@@ -170,16 +146,6 @@ const rsg = {
         [CommandType.MSFVenom]: {
             listSelection: '#msfvenom-selection',
             command: '#msfvenom-command'
-<<<<<<< HEAD
-        }
-    },
-
-    copyToClipboard: (text) => {
-        if (navigator ?.clipboard ?.writeText) {
-            navigator.clipboard.writeText(text)
-            $('#clipboard-toast').toast('show')
-        } else if (window ?.clipboardData ?.setData) {
-=======
         },
         [CommandType.Transfer]: {
             listSelection: '#Transfer-selection',
@@ -193,7 +159,6 @@ const rsg = {
             navigator.clipboard.writeText(text)
             $('#clipboard-toast').toast('show')
         } else if (window?.clipboardData?.setData) {
->>>>>>> 7c9cf8d (Added Transfer tab)
             window.clipboardData.setData('Text', text);
             $('#clipboard-toast').toast('show')
         } else {
@@ -209,13 +174,10 @@ const rsg = {
 
     getShell: () => rsg.shell,
 
-<<<<<<< HEAD
-=======
     getFileName: () => rsg.fileInput,
 
     getFilePath: () => rsg.pathInput,
 
->>>>>>> 7c9cf8d (Added Transfer tab)
     getEncoding: () => rsg.encoding,
 
     getSelectedCommandName: () => {
@@ -248,28 +210,16 @@ const rsg = {
         if (rsg.getSelectedCommandName() === 'PowerShell #3 (Base64)') {
             const encoder = (text) => text;
             const payload = rsg.insertParameters(rsgData.specialCommands['PowerShell payload'], encoder)
-<<<<<<< HEAD
-                command = "powershell -e " + btoa(toBinary(payload))
-            function toBinary(string) {
-                const codeUnits = new Uint16Array(string.length);
-                for (let i = 0; i < codeUnits.length; i++) {
-                codeUnits[i] = string.charCodeAt(i);
-=======
             command = "powershell -e " + btoa(toBinary(payload))
             function toBinary(string) {
                 const codeUnits = new Uint16Array(string.length);
                 for (let i = 0; i < codeUnits.length; i++) {
                     codeUnits[i] = string.charCodeAt(i);
->>>>>>> 7c9cf8d (Added Transfer tab)
                 }
                 const charCodes = new Uint8Array(codeUnits.buffer);
                 let result = '';
                 for (let i = 0; i < charCodes.byteLength; i++) {
-<<<<<<< HEAD
-                result += String.fromCharCode(charCodes[i]);
-=======
                     result += String.fromCharCode(charCodes[i]);
->>>>>>> 7c9cf8d (Added Transfer tab)
                 }
                 return result;
             }
@@ -299,22 +249,12 @@ const rsg = {
     },
 
     highlightParameters: (text, encoder) => {
-<<<<<<< HEAD
-        const parameters = ['{ip}', '{port}', '{shell}', encodeURI('{ip}'), encodeURI('{port}'),
-            encodeURI('{shell}')
-        ];
-
-        parameters.forEach((param) => {
-            if (encoder) param = encoder(param)
-            text = text.replace(param, `<span class="highlighted-parameter">${param}</span>`)
-=======
         const parameters = ['{ip}', '{port}', '{shell}', '{filePath}', '{fileName}', encodeURI('{ip}'), encodeURI('{port}'),
             encodeURI('{shell}'), encodeURI('{filePath}'), encodeURI('{fileName}')];
 
         parameters.forEach((param) => {
             if (encoder) param = encoder(param)
             text = text.replaceAll(param, `<span class="highlighted-parameter">${param}</span>`)
->>>>>>> 7c9cf8d (Added Transfer tab)
         })
         return text
     },
@@ -343,10 +283,6 @@ const rsg = {
     initShells: () => {
         rsgData.shells.forEach((shell, i) => {
             const option = document.createElement("option");
-<<<<<<< HEAD
-
-=======
->>>>>>> 7c9cf8d (Added Transfer tab)
             option.selected = rsg.shell === shell;
             option.classList.add("shell-option");
             option.innerText = shell;
@@ -372,11 +308,8 @@ const rsg = {
             .replaceAll(encoder('{ip}'), encoder(rsg.getIP()))
             .replaceAll(encoder('{port}'), encoder(String(rsg.getPort())))
             .replaceAll(encoder('{shell}'), encoder(rsg.getShell()))
-<<<<<<< HEAD
-=======
             .replaceAll(encoder('{fileName}'), encoder(rsg.getFileName()))
             .replaceAll(encoder('{filePath}'), encoder(rsg.getFilePath()))
->>>>>>> 7c9cf8d (Added Transfer tab)
     },
 
     update: () => {
@@ -388,11 +321,7 @@ const rsg = {
 
     updateValues: () => {
         const listenerOptions = listenerSelect.querySelectorAll(".listener-option");
-<<<<<<< HEAD
-        listenerOptions.forEach((option)  => {
-=======
         listenerOptions.forEach((option) => {
->>>>>>> 7c9cf8d (Added Transfer tab)
             option.selected = rsg.listener === option.value;
         });
 
@@ -412,6 +341,7 @@ const rsg = {
 
     updateTabList: () => {
         const data = rsgData.reverseShellCommands;
+        console.log(data)
         const filteredItems = filterCommandData(
             data,
             {
@@ -419,6 +349,7 @@ const rsg = {
                 commandType: rsg.commandType
             }
         );
+        console.log(filteredItems)
 
         const documentFragment = document.createDocumentFragment()
         filteredItems.forEach((item, index) => {
@@ -426,16 +357,12 @@ const rsg = {
                 name,
                 command
             } = item;
-<<<<<<< HEAD
-
-=======
             // if(command){
             //     if(command.includes("{separar}")) {
             //         secondCommandDiv.style.display = "block"
             //         command.replaceAll("{separar}", "")
             //     }
             // }
->>>>>>> 7c9cf8d (Added Transfer tab)
             const selectionButton = document.createElement("button");
 
             if (rsg.getSelectedCommandName() === item.name) {
@@ -469,13 +396,9 @@ const rsg = {
         command = command.replace('{port}', rsg.getPort())
         command = command.replace('{ip}', rsg.getIP())
         command = command.replace('{payload}', rsg.getPayload())
-<<<<<<< HEAD
-
-=======
         command = command.replace('{filePath}', rsg.getFilePath())
         command = command.replace('{fileName}', rsg.getFileName())
         console.info(command)
->>>>>>> 7c9cf8d (Added Transfer tab)
         if (rsg.getPort() < 1024) {
             privilegeWarning.style.visibility = "visible";
             command = `<span class="highlighted-warning">sudo</span> ${command}`
@@ -487,11 +410,7 @@ const rsg = {
     },
 
     updateReverseShellSelection: () => {
-<<<<<<< HEAD
-        document.querySelector(".list-group-item.active") ?.classList.remove("active");
-=======
         document.querySelector(".list-group-item.active")?.classList.remove("active");
->>>>>>> 7c9cf8d (Added Transfer tab)
         const elements = Array.from(document.querySelectorAll(".list-group-item"));
         const selectedElement = elements.find((item) => item.innerText === rsg.currentCommandName);
         selectedElement?.classList.add("active");
@@ -500,10 +419,6 @@ const rsg = {
     updateReverseShellCommand: () => {
         const command = rsg.generateReverseShellCommand();
         const commandSelector = rsg.uiElements[rsg.commandType].command;
-<<<<<<< HEAD
-=======
-        console.log(command);
->>>>>>> 7c9cf8d (Added Transfer tab)
         document.querySelector(commandSelector).innerHTML = command;
     },
 
@@ -527,11 +442,7 @@ rsg.update();
 ipInput.addEventListener("input", (e) => {
     rsg.setState({
         ip: e.target.value
-<<<<<<< HEAD
-        })
-=======
     })
->>>>>>> 7c9cf8d (Added Transfer tab)
 });
 
 portInput.addEventListener("input", (e) => {
@@ -540,8 +451,6 @@ portInput.addEventListener("input", (e) => {
     })
 });
 
-<<<<<<< HEAD
-=======
 fileInput.addEventListener("input", (e) => {
     rsg.setState({
         fileInput: String(e.target.value)
@@ -553,7 +462,6 @@ pathInput.addEventListener("input", (e) => {
     })
 });
 
->>>>>>> 7c9cf8d (Added Transfer tab)
 listenerSelect.addEventListener("change", (e) => {
     rsg.setState({
         listener: e.target.value
@@ -598,15 +506,12 @@ document.querySelector('#copy-bind-shell-command').addEventListener('click', () 
 document.querySelector('#copy-msfvenom-command').addEventListener('click', () => {
     rsg.copyToClipboard(msfVenomCommand.innerText)
 })
-<<<<<<< HEAD
-=======
 document.querySelector('#copy-Transfer-command').addEventListener('click', () => {
     rsg.copyToClipboard(TransferCommand.innerText)
 })
 // document.querySelector('#copy-Transfer-command-2').addEventListener('click', () => {
 //     rsg.copyToClipboard(TransferCommand2.innerText)
 // })
->>>>>>> 7c9cf8d (Added Transfer tab)
 
 var downloadButton = document.querySelectorAll(".download-svg");
 for (const Dbutton of downloadButton) {
