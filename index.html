@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-auto mt-4" id="filePath" style="display: none">
+                                <!-- <div class="col-auto mt-4" id="filePath" style="display: none">
                                     <div class="input-group" data-toggle="tooltip">
                                         <div class="input-group-prepend">
                                             <span id="filePath-label" class="input-group-text">File Path</span>
@@ -131,7 +131,7 @@
                                             size="8vw" aria-label="filePath"
                                             aria-describedby="filePath-label">
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div id="port-privileges-warning" class="col-12 small text-center"
                                     style="visibility: hidden">
@@ -496,6 +496,15 @@
                                     <option class="os-item" value="linux">Linux</option>
                                     <option class="os-item" value="windows">Windows</option>
                                     <option class="os-item" value="mac">Mac</option>
+                                </select>
+                            </div>
+                            <label for="os-options" class="col-auto col-form-label float-left"
+                                style="font-size:1rem">Options</label>
+                            <div class="col-auto">
+                                <select id="options-ud-transfer" class="custom-select">
+                                    <option class="ud-item" value="all">All</option>
+                                    <option class="ud-item" value="download">Download</option>
+                                    <option class="ud-item" value="upload">Upload</option>
                                 </select>
                             </div>
                         </div>

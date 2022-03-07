@@ -25,6 +25,11 @@ const FilterType = {
     'Linux': 'linux',
     'Mac': 'mac'
 };
+const UdFilterType = {
+    'All': 'all',
+    'Upload': 'upload',
+    'Download': 'download'
+}
 
 document.querySelector("#os-options").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
@@ -38,10 +43,16 @@ document.querySelector("#os-options-transfer").addEventListener("change", (event
         filter: selectedOS,
     });
 });
+document.querySelector("#options-ud-transfer").addEventListener("change", (event) => {
+    const selectedUD = event.target.value;  // Selected Upload/Download
+    rsg.setState({
+        filter: selectedUD,
+    });
+});
 
 document.querySelector("#reverse-tab").addEventListener("click", () => {
     fileNameDiv.style.display = "none"
-    filePathDiv.style.display = "none"
+    // filePathDiv.style.display = "none"
     rsg.setState({
         commandType: CommandType.ReverseShell,
     });
@@ -57,7 +68,7 @@ document.querySelector("#bind-tab").addEventListener("click", () => {
 document.querySelector("#bind-tab").addEventListener("click", () => {
     document.querySelector("#bind-shell-selection").innerHTML = "";
     fileNameDiv.style.display = "none"
-    filePathDiv.style.display = "none"
+    // filePathDiv.style.display = "none"
     rsg.setState({
         commandType: CommandType.BindShell
 
@@ -67,7 +78,7 @@ document.querySelector("#bind-tab").addEventListener("click", () => {
 document.querySelector("#msfvenom-tab").addEventListener("click", () => {
     document.querySelector("#msfvenom-selection").innerHTML = "";
     fileNameDiv.style.display = "none"
-    filePathDiv.style.display = "none"
+    // filePathDiv.style.display = "none"
     rsg.setState({
         commandType: CommandType.MSFVenom,
         encoding: "None"
@@ -77,7 +88,7 @@ document.querySelector("#msfvenom-tab").addEventListener("click", () => {
 document.querySelector("#Transfer-tab").addEventListener("click", () => {
     document.querySelector("#Transfer-selection").innerHTML = "";
     fileNameDiv.style.display = "block"
-    filePathDiv.style.display = "block"
+    // filePathDiv.style.display = "block"
     rsg.setState({
         commandType: CommandType.Transfer,
         encoding: "None"
@@ -106,6 +117,11 @@ const filterCommandData = function (data, { commandType, filter }) {
             return true;
         }
 
+        if (filter === UdFilterType.All) {
+            return true;
+        }
+
+        
         return item.meta.includes(filter);
     });
 }
@@ -452,11 +468,11 @@ fileInput.addEventListener("input", (e) => {
         fileInput: String(e.target.value)
     })
 });
-pathInput.addEventListener("input", (e) => {
-    rsg.setState({
-        pathInput: String(e.target.value)
-    })
-});
+// pathInput.addEventListener("input", (e) => {
+//     rsg.setState({
+//         pathInput: String(e.target.value)
+//     })
+// });
 
 listenerSelect.addEventListener("change", (e) => {
     rsg.setState({
