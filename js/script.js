@@ -28,16 +28,12 @@ const FilterType = {
 
 document.querySelector("#os-options").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
-    fileNameDiv.style.display = "none"
-    filePathDiv.style.display = "none"
     rsg.setState({
         filter: selectedOS,
     });
 });
 document.querySelector("#os-options-transfer").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
-    fileNameDiv.style.display = "none"
-    filePathDiv.style.display = "none"
     rsg.setState({
         filter: selectedOS,
     });
