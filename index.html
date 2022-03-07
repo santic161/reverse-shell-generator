@@ -111,6 +111,31 @@
                                     </div>
                                 </div>
 
+<<<<<<< HEAD
+=======
+                                <div class="col-auto mt-4" id="fileName" style="display: none">
+                                    <div class="input-group" data-toggle="tooltip">
+                                        <div class="input-group-prepend">
+                                            <span id="filePath-label" class="input-group-text">File Name</span>
+                                        </div>
+                                        <input id="fileInput" type="text" class="form-control form-control-lg text-center"
+                                            size="8vw" aria-label="filePath"
+                                            aria-describedby="filePath-label">
+                                    </div>
+                                </div>
+
+                                <div class="col-auto mt-4" id="filePath" style="display: none">
+                                    <div class="input-group" data-toggle="tooltip">
+                                        <div class="input-group-prepend">
+                                            <span id="filePath-label" class="input-group-text">File Path</span>
+                                        </div>
+                                        <input id="filePathInput" type="text" class="form-control form-control-lg text-center"
+                                            size="8vw" aria-label="filePath"
+                                            aria-describedby="filePath-label">
+                                    </div>
+                                </div>
+
+>>>>>>> 7c9cf8d (Added Transfer tab)
                                 <div id="port-privileges-warning" class="col-12 small text-center"
                                     style="visibility: hidden">
                                     <span class="highlighted-warning">root</span>
@@ -147,7 +172,11 @@
                             <!-- Command -->
                             <div class="row justify-content-center">
                                 <div class="col-auto position-relative" style="min-width: 15vw">
+<<<<<<< HEAD
                                     <pre class="prompt-sign">🚀</pre>
+=======
+                                    <pre class="prompt-sign">~$</pre>
+>>>>>>> 7c9cf8d (Added Transfer tab)
                                     <pre id="listener-command" class="bg-dark border text-wrap text-break p-4 pl-5 mb-2" spellcheck="false"
                                         style="outline: none; font-size:1em;" contenteditable="true"></pre>
                                 </div>
@@ -191,6 +220,13 @@
                 <a class="nav-link" id="msfvenom-tab" data-toggle="tab" href="#msfvenom" role="tab"
                     aria-controls="msfvenom" aria-selected="false">MSFVenom</a>
             </li>
+<<<<<<< HEAD
+=======
+            <li class="nav-item">
+                <a class="nav-link" id="Transfer-tab" data-toggle="tab" href="#Transfer" role="tab"
+                    aria-controls="Transfer" aria-selected="false">Transfer</a>
+            </li>
+>>>>>>> 7c9cf8d (Added Transfer tab)
             <!-- <li class="nav-item">
                 <a class="nav-link disabled" id="settings-tab" data-toggle="tab" href="#settings" role="tab"
                     aria-controls="settings" aria-selected="false" aria-disabled="true">Settings</a>
@@ -246,7 +282,11 @@
                                     <!-- Reverse Shell Command -->
                                     <div class="row flex-grow-1">
                                         <div class="col position-relative">
+<<<<<<< HEAD
                                             <pre class="prompt-sign">🚀</pre>
+=======
+                                            <pre class="prompt-sign">~$</pre>
+>>>>>>> 7c9cf8d (Added Transfer tab)
                                             <pre id="reverse-shell-command"
                                                 class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
                                                 style="outline: none; font-size:1em;" contenteditable="true"></pre>
@@ -353,10 +393,23 @@
                                     <!-- Command -->
                                     <div class="row flex-grow-1">
                                         <div class="col position-relative">
+<<<<<<< HEAD
                                             <pre class="prompt-sign">🚀</pre>
                                             <pre id="bind-shell-command" class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
                                                 style="outline: none; font-size:1em;" contenteditable="true"></pre>
                                         </div>
+=======
+                                            <pre class="prompt-sign">~$</pre>
+                                            <pre id="bind-shell-command" class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
+                                                style="outline: none; font-size:1em;" contenteditable="true"></pre>
+                                        </div>
+                                        <!-- <div class="col position-relative">
+                                            <pre class="prompt-sign">~$</pre>
+                                            <pre id="reverse-shell-command"
+                                                class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
+                                                style="outline: none; font-size:1em;" contenteditable="true"></pre>
+                                        </div> -->
+>>>>>>> 7c9cf8d (Added Transfer tab)
                                     </div>
 
                                     <div class="row justify-content-end mr-1">
@@ -409,7 +462,11 @@
                                         <!-- Command -->
                                         <div class="row flex-grow-1">
                                             <div class="col position-relative">
+<<<<<<< HEAD
                                                 <pre class="prompt-sign">🚀</pre>
+=======
+                                                <pre class="prompt-sign">~$</pre>
+>>>>>>> 7c9cf8d (Added Transfer tab)
                                                 <pre id="msfvenom-command"
                                                     class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
                                                     style="outline: none; font-size:1em;" contenteditable="true"></pre>
@@ -446,7 +503,81 @@
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <!-- /MSFVenom Tab -->
+=======
+            </div>
+            <!-- /MSFVenom Tab -->
+            
+            <!-- Transfer Tab -->
+            <div class="tab-pane" id="Transfer" role="tabpanel" aria-labelledby="Transfer-tab">
+                <div class="card shadow mb-5">
+                    <div class="card-body">
+                        <img src="/assets/floppy-disk-solid.svg" class="download-svg float-right" data-toggle="tooltip" title="Download Shell Code">
+                        <div class="card-text mt-4">
+                            <div class="row">
+                                    <!-- Left column: MSFVenom selection -->
+                                    <div class="col-12 col-md-3">
+                                        <div id="Transfer-selection" class="list-group overflow-auto"
+                                            style="max-height: 520px">
+                                            <!-- filled by init()-->
+                                        </div>
+                                    </div>
+
+                                    <!-- Right column -->
+                                    <div class="col-12 col-md-9 d-flex flex-column">
+
+                                        <!-- Command -->
+                                        <div class="col flex-grow-1">
+                                            <div class="col position-relative">
+                                                <pre class="prompt-sign">~$</pre>
+                                                <pre id="Transfer-command"
+                                                    class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
+                                                    style="outline: none; font-size:1em;" contenteditable="true"></pre>
+                                            </div>
+                                            <!-- <div class="col position-relative">
+
+                                                <pre class="prompt-sign">~$</pre>
+                                                <pre id="Transfer-command-2"
+                                                    class="bg-dark border pre-wrap text-break p-4 pl-5" spellcheck="false"
+                                                    style="outline: none; font-size:1em; display: none" contenteditable="true"></pre>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="row justify-content-end mr-1">
+                                            <!-- Auto-copy switch -->
+                                            <!-- <div class="custom-control custom-switch mt-2 mr-3" data-toggle="tooltip"
+                                                title="Auto-copy to clipboard when selecting a new shell type">
+                                                <input id="auto-copy-switch" class="custom-control-input"
+                                                    type="checkbox" checked>
+                                                <label for="auto-copy-switch"
+                                                    class="custom-control-label small pr-2 pb-1"
+                                                    style="padding-top: 2px">Auto-copy</label>
+                                            </div> -->
+
+                                            <!-- Raw button -->
+                                            <button type="button" class="raw-listener btn btn-primary float-right mr-3"
+                                                    data-toggle="tooltip" title="View raw">
+                                                Raw
+                                            </button>
+
+                                            <!-- Copy button -->
+                                            <button id="copy-Transfer-command" data-toggle="tooltip"
+                                                title="Copy to clipboard" type="button"
+                                                class="btn btn-primary float-right">
+                                                Copy
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- /Right column -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /Transfer Tab -->
+        </div>
+        
+>>>>>>> 7c9cf8d (Added Transfer tab)
     </div>
 
     <!-- RSG data -->
