@@ -34,19 +34,19 @@ const UdFilterType = {
 document.querySelector("#os-options").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
     rsg.setState({
-        filter: selectedOS,
+        filter: [selectedOS, rsg.filter[1]],
     });
 });
 document.querySelector("#os-options-transfer").addEventListener("change", (event) => {
     const selectedOS = event.target.value;
     rsg.setState({
-        filter: selectedOS,
+        filter: [selectedOS, rsg.filter[1]],
     });
 });
 document.querySelector("#options-ud-transfer").addEventListener("change", (event) => {
     const selectedUD = event.target.value;  // Selected Upload/Download
     rsg.setState({
-        filter: selectedUD,
+        filter: [rsg.filter[0] ,selectedUD],
     });
 });
 
@@ -105,24 +105,31 @@ for (const button of rawLinkButtons) {
 
 const filterCommandData = function (data, { commandType, filter }) {
     return data.filter(item => {
+        
         if (!item.meta.includes(commandType)) {
             return false;
         }
-
         if (!filter) {
             return true;
         }
 
-        if (filter === FilterType.All) {
+        if (filter[0] === FilterType.All && filter[1] === UdFilterType.All) {
             return true;
         }
-
-        if (filter === UdFilterType.All) {
-            return true;
+        if (filter[0] === FilterType.All) {
+            return item.meta.includes(filter[1])
+        }
+        if (filter[1] === UdFilterType.All) {
+            return item.meta.includes(filter[0])
         }
 
-        
-        return item.meta.includes(filter);
+        //Ambas partes del array tienen que retornar true, de ser asi significa que es el meta correcto
+        let BoolFiltered = [item.meta.includes(filter[0]), item.meta.includes(filter[1])]
+        if (BoolFiltered[0] && BoolFiltered[1]) {
+            return true;
+        }
+        //Si no existe el meta que necesitamos devolvemos un False
+        return false;
     });
 }
 
@@ -144,7 +151,7 @@ const rsg = {
         [CommandType.Transfer]: filterCommandData(rsgData.reverseShellCommands, { commandType: CommandType.Transfer })[0].name,
     },
     commandType: CommandType.ReverseShell,
-    filter: FilterType.All,
+    filter: [FilterType.All, UdFilterType.All],
 
     uiElements: {
         [CommandType.ReverseShell]: {
@@ -353,7 +360,6 @@ const rsg = {
 
     updateTabList: () => {
         const data = rsgData.reverseShellCommands;
-        console.log(data)
         const filteredItems = filterCommandData(
             data,
             {
@@ -361,7 +367,6 @@ const rsg = {
                 commandType: rsg.commandType
             }
         );
-        console.log(filteredItems)
 
         const documentFragment = document.createDocumentFragment()
         filteredItems.forEach((item, index) => {
@@ -410,7 +415,6 @@ const rsg = {
         command = command.replace('{payload}', rsg.getPayload())
         command = command.replace('{filePath}', rsg.getFilePath())
         command = command.replace('{fileName}', rsg.getFileName())
-        console.info(command)
         if (rsg.getPort() < 1024) {
             privilegeWarning.style.visibility = "visible";
             command = `<span class="highlighted-warning">sudo</span> ${command}`
